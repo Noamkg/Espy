@@ -1,4 +1,4 @@
-from button_parser import voltage_to_value
+from common.button_parser import voltage_to_value
 
 LEFT_WALL = 0
 RIGHT_WALL = 1 

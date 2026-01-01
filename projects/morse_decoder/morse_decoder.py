@@ -1,6 +1,6 @@
 import machine
 from time import sleep
-import ssd1306
+import lib.ssd1306 as ssd1306
 
 morse_code_dict = {
     'a': '.-',     'b': '-...',   'c': '-.-.',   'd': '-..',
