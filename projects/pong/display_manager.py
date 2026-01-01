@@ -1,10 +1,10 @@
 from machine import Pin, I2C, ADC
-import ssd1306
+import lib.ssd1306 as ssd1306
 from framebuf import FrameBuffer, MONO_VLSB
-from shapes import Rectangle, Player, Ball
+from pong.shapes import Rectangle, Player, Ball
 from time import sleep
 from random import randint
-from button_parser import voltage_to_value
+from common.button_parser import voltage_to_value
 
 
 SCREEN_WIDTH = 128

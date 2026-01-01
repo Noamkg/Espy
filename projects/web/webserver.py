@@ -1,4 +1,4 @@
-from micropythonserver import MicroPyServer
+from lib.micropythonserver import MicroPyServer
 
 server = MicroPyServer("0.0.0.0", 8000)
 
