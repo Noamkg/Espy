@@ -4,7 +4,7 @@ from framebuf import FrameBuffer, MONO_VLSB
 from pong.shapes import Rectangle, Player, Ball
 from time import sleep
 from random import randint
-from common.button_parser import voltage_to_value
+from interfaces.button_parser import voltage_to_value
 
 
 SCREEN_WIDTH = 128
@@ -38,7 +38,9 @@ def run_round(oled, buttons1, buttons2):
     player_1 = Player(16, 16, 4, 16)
     player_1.register_button_pads(buttons1)
     player_2 = Player(104, 16, 4, 16)
-    player_2.register_button_pads(buttons2)
+    player_2.idle = True
+    player_2.y_velocity = -2
+    player_2.register_button_pads(buttons1)
     shapes.append(player_1)
     shapes.append(player_2)
     round_end = False
@@ -50,7 +52,10 @@ def run_round(oled, buttons1, buttons2):
             for collider in [collider for collider in shapes if collider is not shape]:
                 shape.collision(collider)
             shape.bound_collision(SCREEN_WIDTH, SCREEN_HEIGHT)
-            shape.next()
+            if shape.idle:
+                shape.idle_next(SCREEN_HEIGHT)
+            else:
+                shape.next()
             shape.draw(oled) 
             if isinstance(shape, Ball):
                 round_end = bool(shape.round_end)
@@ -65,7 +70,7 @@ def run_round(oled, buttons1, buttons2):
 
 def manager():
     oled = setup_display()
-    buttons1, buttons2 = init_buttons()    
+    buttons1,buttons2  = init_buttons()
     score = [0, 0]
     game_over = False
     while not game_over:
@@ -78,8 +83,8 @@ def manager():
             #oled.text("Blue to continue",0,56)
             oled.text("Press Both Blue!",2,56)
             oled.show()
-            while voltage_to_value(buttons1.read()) != 5 or voltage_to_value(buttons2.read()) != 5:
-                sleep(0.1)
+            while voltage_to_value(buttons1.read()) != 5:
+                sleep(0.05)
             
     oled.fill(0)
     oled.text("Game Over!", 28, 24)

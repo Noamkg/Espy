@@ -1,4 +1,4 @@
-from common.button_parser import voltage_to_value
+from interfaces.button_parser import voltage_to_value
 
 LEFT_WALL = 0
 RIGHT_WALL = 1 
@@ -25,6 +25,7 @@ class Rectangle(Shape):
         self.center_x = self.x + self.width / 2
         self.center_y = self.y + self.height / 2
         self.round_end = False
+        self.idle = False
     
     def next(self):
         self.x += self.x_velocity
@@ -32,7 +33,7 @@ class Rectangle(Shape):
         #print(self.y_velocity)
         self.center_x = self.x + self.width / 2
         self.center_y = self.y + self.height / 2
-        #print(f"location: ({self.x}, {self.y})")
+        # print(f"location: ({self.x}, {self.y})")
     
     def flip_x(self):
         self.x_velocity *= -1
@@ -71,9 +72,18 @@ class Player(Rectangle):
     def collision(self, other):
         pass
     
-    def register_button_pads(self, buttons1):
-        self.buttons = buttons1
-    
+    def register_button_pads(self, buttons):
+        self.buttons = buttons
+
+    def idle_next(self, bounds_height):
+        print("hello")
+        print(self.y)
+        if self.y <= 0:
+            self.y_velocity = 2
+        if self.y + self.height >= bounds_height:
+            self.y_velocity = -2
+        super().next()
+
     def next(self):
         if voltage_to_value(self.buttons.read()) == 2:  # Down Button Pressed
             self.y_velocity = -2

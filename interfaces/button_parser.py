@@ -4,9 +4,9 @@ def voltage_to_value(value: int) -> int:
         4095: 0,
         0: 1,
         432: 2,
-        1150: 3,
-        1860: 4,
-        2800: 5
+        1230: 3,
+        1970: 4,
+        2900: 5
     }
     for key in value_map:
         if abs(value - key) <= 50:
