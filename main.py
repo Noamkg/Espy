@@ -1,8 +1,6 @@
-from display_manager import manager
-from projects.web.webserver import start_server
+from pong.display_manager import manager
+from web.webserver import start_server
 import wifi
-
-
 
 print("Hello World!")
 
